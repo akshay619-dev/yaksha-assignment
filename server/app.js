@@ -3,9 +3,13 @@ const fs = require('fs');
 const path = require('path');
 const csv = require('csv-parser');
 const moment = require('moment');
+const cors = require('cors');
 
 const app = express();
 const port = 3000;
+
+// Enable CORS
+app.use(cors());
 
 // Function to read and parse CSV file
 const readCSV = (filePath) => {
@@ -31,22 +35,22 @@ const filterData = (data, make, duration) => {
         const now = moment();
         let startDate;
         switch (duration.toLowerCase()) {
-            case 'last month':
+            case 'lastMonth':
                 startDate = moment().subtract(1, 'months').startOf('month');
                 break;
-            case 'this month':
+            case 'thisMonth':
                 startDate = moment().startOf('month');
                 break;
-            case 'last 3 months':
+            case 'last3Months':
                 startDate = moment().subtract(3, 'months').startOf('month');
                 break;
-            case 'last 6 months':
+            case 'last6Months':
                 startDate = moment().subtract(6, 'months').startOf('month');
                 break;
-            case 'this year':
+            case 'thisYear':
                 startDate = moment().startOf('year');
                 break;
-            case 'last year':
+            case 'lastYear':
                 startDate = moment().subtract(1, 'years').startOf('year');
                 break;
             default:
